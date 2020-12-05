@@ -1,38 +1,47 @@
 import * as path from 'path'
 
+import * as fs from 'fs-extra'
 import * as vscode from 'vscode'
 
 export class App {
-  getRelativePath(targetUri?: vscode.Uri): string {
-    let thePath: vscode.Uri = null!
-    const activeUri: vscode.Uri | undefined =
-      vscode.window.activeTextEditor?.document?.uri
+  getCurrentDirectory(): string | void {
+    const currentPath = vscode.window.activeTextEditor?.document.uri.fsPath
+    if (!currentPath) return
+    const currentDirectory = path.parse(currentPath).dir
+    return currentDirectory
+  }
 
-    if (activeUri) {
-      thePath = activeUri
-    }
+  parseUserInput(userInput: string): string[] {
+    let files = userInput.split(/[\s|\+|,]/).map(e => e.trim())
+    return files
+  }
 
-    // if relative is undefined then let's default to root
-    if (activeUri === undefined) {
-      vscode.window.showErrorMessage(
-        "Can't find relative path, using root path instead."
-      )
-      const workspaceFolders = vscode.workspace.workspaceFolders
-      if (workspaceFolders === undefined) {
-        vscode.window.showErrorMessage('No workspace available, aborting.')
-        return ''
-      }
+  getFullPaths(files: string[], currentDirectory: string): string[] {
+    const filePaths = files.map(file => path.join(currentDirectory, file))
+    return filePaths
+  }
 
-      const projectRoot = workspaceFolders[0].uri
-      thePath = projectRoot
-    }
+  async createFile(filePath: string) {
+    return fs.outputFile(filePath, '', {
+      encoding: 'utf8',
+      flag: 'wx',
+    })
+  }
 
-    const activeDir = path.parse(thePath.fsPath).dir
-    // console.log(activeDir)
-    return activeDir
+  pathSummary(directoryPath: string, folderLimit = 2): string {
+    return (
+      '.../' +
+      directoryPath.split(/\//g).slice(-folderLimit).join('/') +
+      '/<new-file-location>'
+    )
+  }
 
-    // const targetPath = targetUri.fsPath
-    // const relativePath = path.relative(activeDir, targetPath)
-    // return relativePath
+  showInfoMsg(msg: string) {
+    vscode.window.showInformationMessage(msg)
+  }
+
+  showErrorMsg(error: Error, msg: string) {
+    console.error(error)
+    vscode.window.showErrorMessage(msg)
   }
 }
