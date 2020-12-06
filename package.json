@@ -1,7 +1,7 @@
 {
   "name": "create-relative-file",
   "displayName": "Create Relative File",
-  "description": "⚡️ Create files relative to the current active document",
+  "description": "⚡️ Create files relative to the active document",
   "version": "0.1.0",
   "publisher": "JoshMu",
   "author": {
@@ -10,6 +10,7 @@
     "url": "https://joshmu.dev"
   },
   "repository": {
+    "type": "github",
     "url": "https://github.com/joshmu/vscode-create-relative-file"
   },
   "engines": {
