@@ -3,6 +3,7 @@
   "displayName": "Create Relative File",
   "description": "⚡️ Create files relative to the current active document",
   "version": "0.0.1",
+  "publisher": "JoshMu",
   "author": {
     "name": "Josh Mu",
     "email": "hello@joshmu.dev",
