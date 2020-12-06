@@ -1,65 +1,33 @@
-# create-relative-file README
+# Create Relative File
 
-This is the README for your extension "create-relative-file". After writing up a brief description, we recommend including the following sections.
+Create new files relative to the path of the active document.
+
+![create-relative-file](assets/create-relative-file-preview.gif)
+
+I prefer to keep my hands on the keyboard but hate having to remember and specify a full path when creating files. This vscode plugin aims to solve this by allowing the user to create files relative to the active document they are currently working on.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Via the command prompt search for: `Create Relative File`
 
-For example if there is an image subfolder under your extension project workspace:
+Create 1 or more files by seperating with an empty space or comma.
 
-\!\[feature X\]\(images/feature-x.png\)
+> `newFile1.js newFile2.js ../somewhereElse/newFile3.js`
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+If a new folder path is specified this will also be created.
 
-## Requirements
+> `../newFolder1/newFile1.js`
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Roadmap
 
-## Extension Settings
+Add multiple files under specified path (emmet style):
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+> `../newFolder/newFile1.js+newFile2.js+newFile3.js`
 
-For example:
+If input has a trailing forward slash then create folder insead:
 
-This extension contributes the following settings:
+> `../newFolder/`
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+Default to workspace path when there is no active document.
 
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+### If you enjoy this plugin go smack a ⭐️ on it @ [Github](https://github.com/joshmu/vscode-create-relative-file)
