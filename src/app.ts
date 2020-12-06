@@ -11,6 +11,13 @@ export class App {
     return currentDirectory
   }
 
+  getWorkspacePath(): string | void {
+    const workspaceFolders = vscode.workspace.workspaceFolders
+    if (!workspaceFolders) return
+    const workspaceFolderPath = workspaceFolders[0].uri.path
+    return workspaceFolderPath
+  }
+
   parseUserInput(userInput: string): string[] {
     let files = userInput.split(/[\s|\+|,]/).map(e => e.trim())
     return files
@@ -28,7 +35,13 @@ export class App {
     })
   }
 
-  pathSummary(directoryPath: string, folderLimit = 2): string {
+  pathSummary({
+    directoryPath,
+    folderLimit = 2,
+  }: {
+    directoryPath: string
+    folderLimit?: number
+  }): string {
     return (
       '.../' +
       directoryPath.split(/\//g).slice(-folderLimit).join('/') +
@@ -36,12 +49,12 @@ export class App {
     )
   }
 
-  showInfoMsg(msg: string) {
+  showInfoMsg({ msg }: { msg: string }) {
     vscode.window.showInformationMessage(msg)
   }
 
-  showErrorMsg(error: Error, msg: string) {
-    console.error(error)
+  showErrorMsg({ error, msg }: { error?: Error; msg: string }) {
+    if (error) console.error(error)
     vscode.window.showErrorMessage(msg)
   }
 }

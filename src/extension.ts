@@ -6,12 +6,27 @@ export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
     'create-relative-file.create',
     () => {
+      let activeDocUsed = true
       const app = new App()
 
-      const currentDirectory = app.getCurrentDirectory()
-      if (!currentDirectory) return
+      let directoryPath = app.getCurrentDirectory()
 
-      const pathSummary = app.pathSummary(currentDirectory)
+      // no active doc
+      if (!directoryPath) {
+        activeDocUsed = false
+        directoryPath = app.getWorkspacePath()
+      }
+
+      // no workspace
+      if (!directoryPath) {
+        app.showErrorMsg({ msg: 'No active document or workspace folder.' })
+        return
+      }
+
+      let pathSummary = app.pathSummary({
+        directoryPath,
+        folderLimit: activeDocUsed ? 2 : 1,
+      })
 
       vscode.window
         .showInputBox({
@@ -25,15 +40,15 @@ export function activate(context: vscode.ExtensionContext) {
 
           try {
             const files = app.parseUserInput(userInput)
-            const filePaths = app.getFullPaths(files, currentDirectory)
+            const filePaths = app.getFullPaths(files, directoryPath as string)
 
             const createFilePromises = filePaths.map(app.createFile)
 
             await Promise.all(createFilePromises).catch(error => {
-              app.showErrorMsg(
+              app.showErrorMsg({
                 error,
-                'Some files already exist or could not be created.'
-              )
+                msg: 'Some files already exist or could not be created.',
+              })
             })
 
             const lastFilePath = filePaths.slice(-1)[0]
@@ -42,10 +57,10 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.window.showTextDocument(editor)
             })
           } catch (error) {
-            app.showErrorMsg(
+            app.showErrorMsg({
               error,
-              'Hmmm something went wrong... Let me know on GitHub'
-            )
+              msg: 'Hmmm something went wrong... Let me know on GitHub',
+            })
           }
         })
     }
