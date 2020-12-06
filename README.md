@@ -1,8 +1,7 @@
 # Create Relative File
 
 Create new files relative to the path of the active document.
-
-![create-relative-file](assets/create-relative-file-preview.gif)
+![create-relative-file](./assets/create-relative-file-preview.gif)
 
 I prefer to keep my hands on the keyboard but hate having to remember and specify a full path when creating files. This vscode plugin aims to solve this by allowing the user to create files relative to the active document they are currently working in.
 
