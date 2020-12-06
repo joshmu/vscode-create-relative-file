@@ -32,7 +32,7 @@ export class App {
     return (
       '.../' +
       directoryPath.split(/\//g).slice(-folderLimit).join('/') +
-      '/<new-file-location>'
+      '/<HERE>'
     )
   }
 

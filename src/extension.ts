@@ -4,7 +4,7 @@ import { App } from './app'
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
-    'create-relative-file.createFiles',
+    'create-relative-file.create',
     () => {
       const app = new App()
 
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInputBox({
           value: '',
-          prompt: `Create Files: ${pathSummary}`,
+          prompt: `Create File: ${pathSummary}`,
           ignoreFocusOut: true,
           valueSelection: undefined,
         })
@@ -37,9 +37,9 @@ export function activate(context: vscode.ExtensionContext) {
             })
 
             const lastFilePath = filePaths.slice(-1)[0]
-            vscode.workspace.openTextDocument(lastFilePath).then(textDoc => {
-              if (!textDoc) return
-              vscode.window.showTextDocument(textDoc)
+            vscode.workspace.openTextDocument(lastFilePath).then(editor => {
+              if (!editor) return
+              vscode.window.showTextDocument(editor)
             })
           } catch (error) {
             app.showErrorMsg(
