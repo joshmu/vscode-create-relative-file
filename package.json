@@ -2,7 +2,7 @@
   "name": "create-relative-file",
   "displayName": "Create Relative File",
   "description": "⚡️ Create files relative to the active document",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "JoshMu",
   "author": {
     "name": "Josh Mu",
