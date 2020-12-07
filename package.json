@@ -23,6 +23,7 @@
     "onCommand:create-relative-file.create"
   ],
   "main": "./out/extension.js",
+  "icon": "icon.png",
   "contributes": {
     "commands": [
       {
