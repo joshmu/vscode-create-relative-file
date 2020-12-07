@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window
         .showInputBox({
           value: '',
-          prompt: `Create File: ${pathSummary}`,
+          prompt: `Create: ${pathSummary}`,
           ignoreFocusOut: true,
           valueSelection: undefined,
         })
@@ -39,23 +39,19 @@ export function activate(context: vscode.ExtensionContext) {
           if (!userInput) return
 
           try {
-            const files = app.parseUserInput(userInput)
-            const filePaths = app.getFullPaths(files, directoryPath as string)
+            const paths = app.parseUserInput(userInput)
+            const fullPaths = app.getFullPaths(paths, directoryPath as string)
 
-            const createFilePromises = filePaths.map(app.createFile)
+            const { filePaths, folderPaths } = await app.create(fullPaths)
 
-            await Promise.all(createFilePromises).catch(error => {
-              app.showErrorMsg({
-                error,
-                msg: 'Some files already exist or could not be created.',
+            // if new file created then switch focus to it
+            if (filePaths.length) {
+              const lastFilePath = filePaths[filePaths.length - 1]
+              vscode.workspace.openTextDocument(lastFilePath).then(editor => {
+                if (!editor) return
+                vscode.window.showTextDocument(editor)
               })
-            })
-
-            const lastFilePath = filePaths.slice(-1)[0]
-            vscode.workspace.openTextDocument(lastFilePath).then(editor => {
-              if (!editor) return
-              vscode.window.showTextDocument(editor)
-            })
+            }
           } catch (error) {
             app.showErrorMsg({
               error,
