@@ -2,7 +2,7 @@
 
 Create new files relative to the path of the active document.
 
-![](./demo.gif)
+![Demo](https://github.com/joshmu/vscode-create-relative-file/blob/main/demo.gif?raw=true)
 
 I prefer to keep my hands on the keyboard but hate having to remember a full path when creating files. This vscode plugin solves this by allowing the user to create files relative to the active document they are currently working in.
 
