@@ -39,8 +39,23 @@ export class App {
   }
 
   parseUserInput(userInputs: string): string[] {
-    let files = userInputs.split(/[\s|,]/).map(input => input.trim())
-    return files
+    let paths = userInputs.split(/[\s|,]/).map(input => input.trim())
+    const allPaths = this.parseAdditionalFiles(paths)
+    return allPaths
+  }
+
+  parseAdditionalFiles(paths: string[]): string[] {
+    const allPaths: string[] = []
+    paths.forEach(p => {
+      const segments = p.split('/')
+      const base = segments.slice(0, -1).join('/')
+      const files = segments[segments.length - 1].split('+')
+      files.forEach(file => {
+        const filePath = `${base}/${file}`
+        allPaths.push(filePath)
+      })
+    })
+    return allPaths
   }
 
   getFullPaths(files: string[], currentDirectory: string): string[] {

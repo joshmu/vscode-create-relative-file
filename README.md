@@ -22,13 +22,12 @@ If input has no extension or a trailing forward slash then create a folder inste
 
 > `newFolder/newFolder2`
 
-Relative path will default to current workspace when there is no active document.
-If files or folders exist they will not be overwritten.
-
-## Roadmap
-
 Add multiple files under specified path (emmet style):
 
 > `../newFolder/newFile1.js+newFile2.js+newFile3.js`
+
+Relative path will default to current workspace when there is no active document.
+
+If files or folders exist they will not be overwritten.
 
 ### If you enjoy this plugin go smack a ⭐️ on it @ [Github](https://github.com/joshmu/vscode-create-relative-file)
