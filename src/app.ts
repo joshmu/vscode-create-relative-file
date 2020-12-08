@@ -47,11 +47,14 @@ export class App {
   parseAdditionalFiles(paths: string[]): string[] {
     const allPaths: string[] = []
     paths.forEach(p => {
+      const hasPrefixSlash = p[0] === '/'
       const segments = p.split('/')
       const base = segments.slice(0, -1).join('/')
       const files = segments[segments.length - 1].split('+')
       files.forEach(file => {
-        const filePath = `${base}/${file}`
+        let filePath = file
+        if (base) filePath = `${base}/${file}`
+        filePath = (hasPrefixSlash ? '/' : '') + filePath
         allPaths.push(filePath)
       })
     })
@@ -61,6 +64,7 @@ export class App {
   getFullPaths(files: string[], currentDirectory: string): string[] {
     const filePaths = files.map(filePath => {
       // if user path is prefixed with '/' forward slash then use workspace base path
+      console.log({ filePath })
       const fullPath =
         filePath[0] === '/'
           ? path.join(this.getWorkspacePath() as string, filePath)
