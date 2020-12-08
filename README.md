@@ -26,8 +26,10 @@ Add multiple files under specified path (emmet style):
 
 > `../newFolder/newFile1.js+newFile2.js+newFile3.js`
 
-Relative path will default to current workspace when there is no active document.
+If the input is prefixed with a forward slash, then the workspace base path is used. This will also occur by default if no active document is open.
 
-If files or folders exist they will not be overwritten.
+> `/test.config.js`
+
+If files or folders already exist they will not be overwritten.
 
 ### If you enjoy this plugin go smack a ⭐️ on it @ [Github](https://github.com/joshmu/vscode-create-relative-file)

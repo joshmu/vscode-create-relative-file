@@ -59,7 +59,14 @@ export class App {
   }
 
   getFullPaths(files: string[], currentDirectory: string): string[] {
-    const filePaths = files.map(file => path.join(currentDirectory, file))
+    const filePaths = files.map(filePath => {
+      // if user path is prefixed with '/' forward slash then use workspace base path
+      const fullPath =
+        filePath[0] === '/'
+          ? path.join(this.getWorkspacePath() as string, filePath)
+          : path.join(currentDirectory, filePath)
+      return fullPath
+    })
     return filePaths
   }
 
